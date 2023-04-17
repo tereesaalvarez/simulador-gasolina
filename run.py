@@ -21,6 +21,18 @@ def main():
         cola.release()
         surtidor.release()
 
+    # Pagar los coches
+    while pagados < coches:
+        caja.acquire()
+        cola.acquire()
+        for coche in threading.enumerate():
+            if coche.name != "MainThread":
+                if coche.repostado and not coche.pagado:
+                    coche.pagar()
+                    break
+        cola.release()
+        caja.release()
+
 
 
     

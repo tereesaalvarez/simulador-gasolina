@@ -48,8 +48,8 @@ class Coche(threading.Thread):
     
     def repostar(self):
         # Repostar el coche
+        tiempo =time.sleep(random.randint(5, 10))
         print("El coche %s está repostando" % (self.name))
-        time.sleep(random.randint(5, 10))
         self.repostado = True
         # Avisar a la cola de espera
         cola.acquire()
