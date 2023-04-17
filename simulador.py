@@ -2,37 +2,21 @@ import threading
 import time
 import random
 
-# Definición de variables globales
-# Número de surtidores
 surtidores = 1
-# Número de cajas
 cajas = 1
-# Número de coches
 coches = 50
-# Número de coches repostados
 repostados = 0
-# Número de coches pagados
 pagados = 0
-
-# Definición de semáforos
-# Semáforo para controlar el acceso a los surtidores
 semSurtidores = threading.Semaphore(surtidores)
-# Semáforo para controlar el acceso a las cajas
 semCajas = threading.Semaphore(cajas)
-# Semáforo para controlar el acceso a la cola de espera
 semCola = threading.Semaphore(1)
-
-# Definición de variables de condición
-# Variable de condición para controlar la cola de espera
 cola = threading.Condition(semCola)
-# Variable de condición para controlar los surtidores
 surtidor = threading.Condition(semSurtidores)
-# Variable de condición para controlar las cajas
 caja = threading.Condition(semCajas)
 
 # Definición de la clase coche
 class Coche(threading.Thread):
-    def __init__(self, tipo, litros):
+    def __init__(self):
         threading.Thread.__init__(self)
         self.repostado = False
         self.pagado = False
@@ -45,7 +29,7 @@ class Coche(threading.Thread):
         print("El coche %s se ha unido a la cola de espera" % (self.name))
         cola.notify()
         cola.release()
-        # Esperar a que se le atienda
+        # Esperar a que reposte
         cola.acquire()
         while not self.repostado:
             cola.wait()
