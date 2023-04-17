@@ -42,7 +42,7 @@ class Coche(threading.Thread):
         global pagados
         # Añadir el coche a la cola de espera
         cola.acquire()
-        print("El coche se ha unido a la cola de espera" % (self.name))
+        print("El coche %s se ha unido a la cola de espera" % (self.name))
         cola.notify()
         cola.release()
         # Esperar a que se le atienda
